@@ -2,7 +2,7 @@
 *Files to look at*:
 
 * [MainWindow.xaml](./CS/WpfApplication18/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/WpfApplication18/MainWindow.xaml))
-* [MainWindow.xaml.cs](./CS/WpfApplication18/MainWindow.xaml.cs) (VB: [MainWindow.xaml](./VB/WpfApplication18/MainWindow.xaml))
+* [MainWindow.xaml.cs](./CS/WpfApplication18/MainWindow.xaml.cs) (VB: [MainWindow.xaml.vb](./VB/WpfApplication18/MainWindow.xaml.vb))
 <!-- default file list end -->
 # Create details with a grid and custom content and put them in a tabbed container
 
