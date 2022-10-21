@@ -8,7 +8,7 @@
 
 This example shows tabbed details in the [GridControl](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridControl). The **Orders** tab displays the `GridControl` and the **Notes** tab displays a memo field. The form contains the `GridControl` defined in XAML code and the button that creates a second identical `GridControl` in code-behind.
 
-![image](https://user-images.githubusercontent.com/65009440/196939952-ddfdb190-d42f-4c90-8d63-3ef0c4885e95.png)
+![image](https://user-images.githubusercontent.com/65009440/196939952-ddfdb190-d42f-4c90-8d63-3ef0c4885e95.png) 
 
 ## Files to Review
 
