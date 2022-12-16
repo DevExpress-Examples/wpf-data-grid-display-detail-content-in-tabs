@@ -1,111 +1,57 @@
 ﻿using DevExpress.Xpf.Grid;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace WpfApplication18 {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            gridControl.ItemsSource = Employees;
+            grid.ItemsSource = Employees.GetEmployees();
+            grid.Loaded += (d, e) => { (d as GridControl)?.ExpandMasterRow(0); };
         }
 
-        #region #GridInCode
-        private void Button_Click(object sender, RoutedEventArgs e) {
-            GridControl newGrid = CreateGrid();
-            AddDetailsToGrid(newGrid);
-            Grid.SetRow(newGrid, 2);
-            grid.Children.Add(newGrid);
+        public class Employee {
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string Title { get; set; }
+            public string Notes { get; set; }
+            public List<Order> Orders { get; set; }
         }
-        private GridControl CreateGrid() {
-            GridControl newGrid = new GridControl();
-            newGrid.AutoGenerateColumns = AutoGenerateColumnsMode.AddNew;
-            newGrid.View = new TableView();
-            ((TableView)newGrid.View).AutoWidth = true;
-            ((TableView)newGrid.View).ShowGroupPanel = false;
-            newGrid.View.DetailHeaderContent = "Employees";
-            newGrid.ItemsSource = Employees;
-            return newGrid;
+        public class Order {
+            public string Supplier { get; set; }
+            public DateTime Date { get; set; }
+            public string ProductName { get; set; }
+            public int Quantity { get; set; }
         }
-
-        private void AddDetailsToGrid(GridControl grid) {
-            DataControlDetailDescriptor dataControlDetail = new DataControlDetailDescriptor();
-            dataControlDetail.ItemsSourcePath = "Orders";
-
-            GridControl detailGrid = new GridControl();
-            dataControlDetail.DataControl = detailGrid;
-            detailGrid.AutoGenerateColumns = AutoGenerateColumnsMode.AddNew;
-            detailGrid.View.DetailHeaderContent = "Orders";
-            ((TableView)detailGrid.View).ShowGroupPanel = false;
-
-            ContentDetailDescriptor contentDetail = new ContentDetailDescriptor();
-            contentDetail.ContentTemplate = (DataTemplate)FindResource("EmployeeNotes");
-            contentDetail.HeaderContent = "Notes";
-
-            TabViewDetailDescriptor tabDetail = new TabViewDetailDescriptor();
-            tabDetail.DetailDescriptors.Add(dataControlDetail);
-            tabDetail.DetailDescriptors.Add(contentDetail);
-
-            grid.DetailDescriptor = tabDetail;
-        }
-        #endregion #GridInCode
-
-        private List<Employee> employees;
-        private List<Employee> Employees {
-            get {
-                if (employees == null)
-                    PopulateEmployees();
+        public class Employees {
+            public static ObservableCollection<Employee> GetEmployees() {
+                ObservableCollection<Employee> employees = new ObservableCollection<Employee>() {
+                new Employee() {
+                    FirstName="Bruce",
+                    LastName="Cambell",
+                    Title="Sales Manager",
+                    Notes="Education includes a BA in psychology from Colorado State University in 1970.  He also completed 'The Art of the Cold Call.'  Bruce is a member of Toastmasters International.",
+                    Orders = new List<Order>()
+                },
+                new Employee() {
+                    FirstName="Cindy",
+                    LastName="Haneline",
+                    Title="Vice President of Sales",
+                    Notes="Cindy received her BTS commercial in 1974 and a Ph.D. in international marketing from the University of Dallas in 1981.  She is fluent in French and Italian and reads German.  She joined the company as a sales representative, was promoted to sales manager in January 1992 and to vice president of sales in March 1993.  Cindy is a member of the Sales Management Roundtable, the Seattle Chamber of Commerce, and the Pacific Rim Importers Association.",
+                    Orders = new List<Order>()
+                },
+            };
+                employees[0].Orders.Add(new Order() { Supplier = "Supplier 1", Date = DateTime.Now, ProductName = "TV", Quantity = 20 });
+                employees[0].Orders.Add(new Order() { Supplier = "Supplier 2", Date = DateTime.Now.AddDays(3), ProductName = "Projector", Quantity = 15 });
+                employees[0].Orders.Add(new Order() { Supplier = "Supplier 3", Date = DateTime.Now.AddDays(3), ProductName = "HDMI Cable", Quantity = 50 });
+                employees[1].Orders.Add(new Order() { Supplier = "Supplier 1", Date = DateTime.Now.AddDays(1), ProductName = "Blu-Ray Player", Quantity = 10 });
+                employees[1].Orders.Add(new Order() { Supplier = "Supplier 2", Date = DateTime.Now.AddDays(1), ProductName = "HDMI Cable", Quantity = 10 });
+                employees[1].Orders.Add(new Order() { Supplier = "Supplier 3", Date = DateTime.Now.AddDays(1), ProductName = "Projector", Quantity = 10 });
+                employees[1].Orders.Add(new Order() { Supplier = "Supplier 4", Date = DateTime.Now.AddDays(1), ProductName = "Amplifier", Quantity = 10 });
                 return employees;
-
             }
         }
-        private void PopulateEmployees() {
-            employees = new List<Employee>();
-            employees.Add(new Employee("Bruce", "Cambell", "Sales Manager", "Education includes a BA in psychology from Colorado State University in 1970.  He also completed 'The Art of the Cold Call.'  Bruce is a member of Toastmasters International."));
-            employees[0].Orders.Add(new Order("Suppliers Inc.", DateTime.Now, "TV", 20));
-            employees[0].Orders.Add(new Order("Suppliers Inc.", DateTime.Now.AddDays(3), "Projector", 15));
-            employees.Add(new Employee("Cindy", "Haneline", "Vice President of Sales", "Cindy received her BTS commercial in 1974 and a Ph.D. in international marketing from the University of Dallas in 1981.  She is fluent in French and Italian and reads German.  She joined the company as a sales representative, was promoted to sales manager in January 1992 and to vice president of sales in March 1993.  Cindy is a member of the Sales Management Roundtable, the Seattle Chamber of Commerce, and the Pacific Rim Importers Association."));
-            employees[1].Orders.Add(new Order("Suppliers Inc.", DateTime.Now.AddDays(1), "Blu-Ray Player", 10));
-        }
-
-    }
-
-    public class Employee {
-        private string firstName;
-        private string lastName;
-        private string title;
-        private string notes;
-        private List<Order> orders;
-        public Employee(string firstName, string lastName, string title, string notes) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.title = title;
-            this.notes = notes;
-            this.orders = new List<Order>();
-        }
-        public Employee() { }
-        public string FirstName { get { return firstName; } set { firstName = value; } }
-        public string LastName { get { return lastName; } set { lastName = value; } }
-        public string Title { get { return title; } set { title = value; } }
-        public string Notes { get { return notes; } set { notes = value; } }
-        public List<Order> Orders { get { return orders; } }
-    }
-
-    public class Order {
-        private string supplier;
-        private DateTime date;
-        private string productName;
-        private int quantity;
-        public Order(string supplier, DateTime date, string productName, int quantity) {
-            this.supplier = supplier;
-            this.date = date;
-            this.productName = productName;
-            this.quantity = quantity;
-        }
-        public string Supplier { get { return supplier; } set { supplier = value; } }
-        public DateTime Date { get { return date; } set { date = value; } }
-        public string ProductName { get { return productName; } set { productName = value; } }
-        public int Quantity { get { return quantity; } set { quantity = value; } }
     }
 }
