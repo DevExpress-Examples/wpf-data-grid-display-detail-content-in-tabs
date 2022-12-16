@@ -6,7 +6,7 @@
 
 # WPF Data Grid - Display Detail Content in Tabs
 
-This example shows tabbed details in the [GridControl](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridControl). The **Orders** tab displays the `GridControl` and the **Notes** tab displays a memo field.
+This example creates tabbed details in the [GridControl](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridControl). The **Orders** tab displays the `GridControl` and the **Notes** tab displays a memo field.
 
 ![image](https://user-images.githubusercontent.com/65009440/208093632-fae1f2fe-85e6-4dfc-8c58-0c61398101f4.png)
 
