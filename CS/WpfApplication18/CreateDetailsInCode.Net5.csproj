@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
@@ -36,6 +36,6 @@
     <PackageReference Include="DevExpress.Wpf.Printing" Version="24.2.*-*" />
     <PackageReference Include="DevExpress.Wpf.Reporting" Version="24.2.*-*" />
     <PackageReference Include="DevExpress.Wpf.Themes.All" Version="24.2.*-*" />
-    <PackageReference Include="System.Data.OleDB" Version="5.0" />
+    <PackageReference Include="System.Data.OleDB" Version="8.0.1" />
   </ItemGroup>
 </Project>
